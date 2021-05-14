@@ -2,6 +2,7 @@ import { FC } from "react";
 import { createUseStyles, useTheme } from "react-jss";
 import { AppTheme } from "../styles/theme";
 import { IResource } from "../models/Resource";
+import Link from "next/link";
 
 const useStyles = createUseStyles((theme: AppTheme) => ({
   resourcePreview: {
@@ -13,9 +14,8 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     marginTop: 18,
     backgroundColor: `${theme.colors.ui[1].base}`,
     borderRadius: 4,
-  },
-  resourceIdentifiers: {
-
+    cursor: "pointer",
+    textDecoration: "none",
   },
   resourceStats: {
     textAlign: "right",
@@ -45,15 +45,17 @@ export const ResourcePreview: FC<ResourcePreviewProps> = (props) => {
   const classes = useStyles({ theme });
 
   return (
-    <div className={classes.resourcePreview}>
-      <div className={classes.resourceIdentifiers}>
-        <h3 className={classes.name}>{props.resource.name}</h3>
-        <p className={classes.previewDetail}>{props.resource.coach}</p>
-      </div>
-      <div className={classes.resourceStats}>
-        <p className={classes.previewDetail}>{props.resource.rating} / 5 <span className="material-icons">star</span></p>
-        <p className={classes.previewDetail}>{props.resource.numDownloads} downloads <span className="material-icons">download</span></p>
-      </div>
-    </div>
+    <Link href={`/resource/${props.resource.id}`}>
+      <a className={classes.resourcePreview}>
+        <div>
+          <h3 className={classes.name}>{props.resource.name}</h3>
+          <p className={classes.previewDetail}>{props.resource.coach}</p>
+        </div>
+        <div className={classes.resourceStats}>
+          <p className={classes.previewDetail}>{props.resource.rating} / 5 <span className="material-icons">star</span></p>
+          <p className={classes.previewDetail}>{props.resource.numDownloads} downloads <span className="material-icons">download</span></p>
+        </div>
+      </a>
+    </Link>
   );
 };

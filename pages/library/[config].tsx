@@ -97,7 +97,7 @@ export const LibraryPage: FC = () => {
   const pageRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    updateFromSlug();
+    updateFromConfig();
   }, [router]);
 
   useEffect(() => {
@@ -117,14 +117,14 @@ export const LibraryPage: FC = () => {
     }
   }, [resourceGroup]);
 
-  const updateFromSlug = () => {
+  const updateFromConfig = () => {
     // expect in the format of [type]-basketball-[group]-for-[level]-[gender]
-    const slug = router?.query?.slug;
-    if (typeof slug === "string") {
-      const rType = slug.split("-basketball-")[0].split("-").join(" ");
-      const rGroup = slug.split("-basketball-")[1].split("-for-")[0];
-      const rLevel = slug.split("-for-")[1].split("-")[0];
-      const rGender = slug.split("-for-")[1].split("-").slice(1).join("-");
+    const config = router?.query?.config;
+    if (typeof config === "string") {
+      const rType = config.split("-basketball-")[0].split("-").join(" ");
+      const rGroup = config.split("-basketball-")[1].split("-for-")[0];
+      const rLevel = config.split("-for-")[1].split("-")[0];
+      const rGender = config.split("-for-")[1].split("-").slice(1).join("-");
 
       if (rGroup === "plays" || rGroup === "drills" || rGroup === "practices") {
         setResourceGroup(rGroup);
