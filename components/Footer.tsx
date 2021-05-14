@@ -15,6 +15,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     width: 640,
     top: -20,
     right: -80,
+    zIndex: 0,
   },
   decorativeLine: {
     width: 60,
@@ -50,6 +51,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
       color: `${theme.colors.ui[2].text.secondary}`,
       textDecoration: "none",
       transition: `color 0.2s ease`,
+      position: "relative",
       "&:hover": {
         color: `${theme.colors.ui[2].text.primary}`,
       }
@@ -67,7 +69,8 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
       color: `${theme.colors.ui[2].text.secondary}`,
       textDecoration: "none",
       marginBottom: 8,
-      transition: `color 0.15s ease`,
+      transition: `color 0.2s ease`,
+      position: "relative",
       "&:hover": {
         color: `${theme.colors.ui[2].text.primary}`,
       }
