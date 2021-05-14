@@ -1,4 +1,5 @@
 import { FC, ReactNode, MouseEvent } from "react";
+import Link from "next/link";
 import { createUseStyles, useTheme } from "react-jss";
 import { AppTheme } from "../styles/theme";
 
@@ -15,24 +16,34 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     "&.primary": {
       color: `${theme.colors.primary.text.primary}`,
       backgroundColor: `${theme.colors.primary.base}`,
+      border: `2px solid ${theme.colors.primary.base}`,
       "&:hover": {
         backgroundColor: `${theme.colors.primary.active}`,
+        border: `2px solid ${theme.colors.primary.active}`,
       }
     },
+
     "&.secondary": {
-      color: `${theme.colors.primary.text.primary}`,
-      backgroundColor: `${theme.colors.secondary.base}`,
+      color: `${theme.colors.primary.base}`,
+      backgroundColor: `${theme.colors.primary.base.opacity(0)}`,
+      border: `2px solid ${theme.colors.primary.base}`,
       "&:hover": {
-        backgroundColor: `${theme.colors.secondary.active}`,
+        color: `${theme.colors.primary.active}`,
+        border: `2px solid ${theme.colors.primary.active}`,
       }
     },
+
     "&.toolbar": {
       color: `${theme.colors.ui[0].text.primary}`,
       backgroundColor: `${theme.colors.ui[0].base.opacity(0)}`,
-      borderBottom: `2px solid ${theme.colors.primary.base.opacity(0)}`,
+      border: `2px solid ${theme.colors.primary.base.opacity(0)}`,
+      "&.active": {
+        color: `${theme.colors.primary.base}`,
+        border: `2px solid ${theme.colors.primary.base.opacity(0)}`,
+      },
       "&:hover": {
         color: `${theme.colors.primary.base}`,
-        borderBottom: `2px solid ${theme.colors.primary.base}`,
+        border: `2px solid ${theme.colors.primary.base}`,
       }
     },
   },
@@ -41,8 +52,6 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
 export interface ButtonProps {
   type: string,
   text: string,
-  start?: ReactNode,
-  end?: ReactNode,
   onClick?: (ev: MouseEvent<HTMLButtonElement>) => void,
   href?: string,
   className?: string,
@@ -68,9 +77,7 @@ const ClickableButton: FC<ButtonProps> = (props) => {
   const classes = useStyles({ theme });
 
   return (
-    <button className={`${classes.button} ${props.type} ${props.className}`} onClick={props.onClick}>
-      {props.start}{props.text}{props.end}
-    </button>
+    <button className={`${classes.button} ${props.type} ${props.className}`} onClick={props.onClick}>{props.text}</button>
   );
 };
 
@@ -79,10 +86,10 @@ const LinkButton: FC<ButtonProps> = (props) => {
   const classes = useStyles({ theme });
 
   return (
-    <a href={props.href}>
-      <button className={`${classes.button} ${props.type} ${props.className}`}>
-        {props.start}{props.text}{props.end}
-      </button>
-    </a>
+    <Link href={props.href ?? ""}>
+      <a>
+        <button className={`${classes.button} ${props.type} ${props.className}`}>{props.text}</button>
+      </a>
+    </Link>
   );
 };

@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Head from 'next/head';
 import { createUseStyles, useTheme } from "react-jss";
 import { AppTheme } from '../styles/theme';
@@ -22,7 +23,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
       marginBottom: 6,
     },
     "& > p": {
-      ...theme.typography.subtitle,
+      ...theme.typography.large,
       color: `${theme.colors.ui[0].text.secondary}`,
       marginBottom: 24,
     },
@@ -77,25 +78,25 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     marginBottom: 24,
   },
   buttonGroup: {
-    "& > a": {
+    "& button": {
       marginRight: 12,
     },
   },
 }));
 
-export default function Home() {
+export const HomePage: FC = () => {
   const theme = useTheme<AppTheme>();
   const classes = useStyles({ theme });
 
   return (
     <>
       <Head>
-        <title>Playbook – Coach better.</title>
+        <title>Playbook – Coach Better</title>
         <meta name="description" content="Unlock your coaching potential with Playbook, a platform connecting experienced coaches with materials and those just starting out who are in need of help." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hind:wght@400;600&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </Head>
       <Page>
         <Toolbar />
@@ -137,3 +138,5 @@ export default function Home() {
     </>
   )
 }
+
+export default HomePage;

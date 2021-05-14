@@ -59,7 +59,7 @@ export const theme: AppTheme = {
     },
     primary: {
       base: new Color("#E28413"),
-      active: new Color("#CC7308"),
+      active: new Color("#F2A447"),
       text: textColors.light,
     },
     secondary: {
@@ -81,11 +81,30 @@ export const theme: AppTheme = {
       fontWeight: "normal",
       margin: 0,
     },
-    subtitle: {
+    subheading: {
+      fontFamily: "Bebas Neue",
+      fontSize: "1.5em",
+      fontWeight: "normal",
+      margin: 0,
+    },
+    large: {
       fontFamily: "Hind",
       fontSize: "1.17em",
       fontWeight: 400,
       letterSpacing: "-0.01em",
+      margin: 0,
+    },
+    body: {
+      fontFamily: "Hind",
+      fontSize: "1em",
+      lineHeight: "1.33em",
+      fontWeight: 400,
+      margin: 0,
+    },
+    small: {
+      fontFamily: "Hind",
+      fontSize: "0.78em",
+      fontWeight: 400,
       margin: 0,
     },
     preTitle: {
@@ -96,25 +115,12 @@ export const theme: AppTheme = {
       textTransform: "uppercase",
       margin: 0,
     },
-    body: {
-      fontFamily: "Hind",
-      fontSize: "1em",
-      lineHeight: "1.33em",
-      fontWeight: 400,
-      margin: 0,
-    },
-    caption: {
-      fontFamily: "Hind",
-      fontSize: "0.78em",
-      fontWeight: 400,
-      margin: 0,
-    },
     button: {
       fontFamily: "Hind",
       fontSize: "0.78em",
       fontWeight: 600,
       textTransform: "uppercase",
-      letterSpacing: "0.125em",
+      letterSpacing: "0.1em",
       margin: 0,
     },
   }
