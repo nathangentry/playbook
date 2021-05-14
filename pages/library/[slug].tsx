@@ -22,6 +22,9 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "stetch",
+    position: "sticky",
+    height: "fit-content",
+    top: 80,
   },
   resultsPanel: {
     gridColumn: "5 / span 8",
