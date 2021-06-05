@@ -5,7 +5,7 @@ export interface IResource {
   type: string,
   coach: string,
   description: string,
-  totalLength: number,
+  size: number,
   numDownloads: number,
   rating: number,
   level: string,

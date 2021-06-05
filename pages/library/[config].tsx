@@ -199,7 +199,7 @@ export const LibraryPage: FC = () => {
             </div>
             <div className={classes.resultsContainer}>
               {results.length > 0
-                ? results.map(result => <ResourcePreview resource={result} />)
+                ? results.map(result => <ResourcePreview resource={result} key={result.id} />)
                 : <div className={classes.emptyStateContainer}>
                   <span className={`material-icons ${classes.emptyStateIcon}`}>search</span>
                   <p className={classes.emptyStateMessage}>No Results Found</p>

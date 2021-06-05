@@ -31,7 +31,7 @@ const generateData = (n: number) => {
             id: i,
             ...(meta(coaches[i % coaches.length], Math.floor(Math.random() * 3))),
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            totalLength: Math.floor(Math.random() * 100),
+            size: Math.floor(Math.random() * 100),
             numDownloads: Math.floor(Math.random() * 1000),
             rating: Math.round((Math.random() * 4 + 1) * 100) / 100,
             level: ["elementary", "intermediate", "advanced"][Math.floor(Math.random() * 3)],

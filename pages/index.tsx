@@ -43,9 +43,11 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
   founderImage: {
     gridColumn: "1 / span 5",
     width: "100%",
+    height: "100%",
     position: "relative",
     borderRadius: 4,
     overflow: "hidden",
+    objectFit: "cover",
   },
   founderLetter: {
     gridColumn: "7 / span 6",
