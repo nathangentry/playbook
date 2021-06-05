@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 import { createUseStyles, useTheme } from "react-jss";
 import { AppTheme } from "../styles/theme";
 
@@ -14,9 +14,11 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
 	}
 }));
 
-interface PageProps { }
+interface PageProps {
+	children: ReactElement[],
+}
 
-export const Page: FC<PageProps> = React.forwardRef((props, ref: React.ForwardedRef<HTMLDivElement>) => {
+export const Page = React.forwardRef<HTMLDivElement, PageProps>((props: PageProps, ref: React.ForwardedRef<HTMLDivElement>) => {
 	const theme = useTheme<AppTheme>();
 	const classes = useStyles({ theme });
 

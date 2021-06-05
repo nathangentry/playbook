@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useRef } from 'react';
+import { FC, useEffect, useState, useRef, Ref } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { createUseStyles, useTheme } from "react-jss";
@@ -162,7 +162,7 @@ export const LibraryPage: FC = () => {
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hind:wght@400;600&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
       </Head>
-      <Page ref={pageRef}>
+      <Page ref={pageRef as Ref<HTMLDivElement>}>
         <Toolbar active="library" />
         <div className={classes.libraryContent}>
           <div className={classes.filterPanel}>
@@ -171,13 +171,13 @@ export const LibraryPage: FC = () => {
               <div className={classes.headerLine} />
             </div>
             <form>
-              <Dropdown name="resource" label="Resource" value={resourceGroup} onChange={setResourceGroup}>
+              <Dropdown name="resource" label="Resource" value={resourceGroup} onChange={(newValue) => { (newValue === "plays" || newValue === "drills" || newValue === "practices") && setResourceGroup(newValue) }}>
                 <option value="plays">Plays</option>
                 <option value="drills">Drills</option>
                 <option value="practices">Practices</option>
               </Dropdown>
               <Dropdown name="type" label="Type" value={resourceType} onChange={setResourceType}>
-                {types[resourceGroup].map(t => <option value={t.toLowerCase()}>{t}</option>)}
+                {types[resourceGroup].map(t => <option value={t.toLowerCase()} key={t.toLowerCase()}>{t}</option>)}
               </Dropdown>
               <Dropdown name="level" label="Level" value={level} onChange={setLevel}>
                 <option value="elementary">Elementary</option>
