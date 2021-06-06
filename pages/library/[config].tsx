@@ -9,6 +9,7 @@ import { Dropdown } from '../../components/Dropdown';
 import { ResourcePreview } from '../../components/ResourcePreview';
 import { Footer } from '../../components/Footer';
 import data from '../../util/data';
+import { IResource } from '../../models/Resource';
 
 const useStyles = createUseStyles((theme: AppTheme) => ({
   libraryContent: {
@@ -88,7 +89,7 @@ export const LibraryPage: FC = () => {
   const levels = ["elementary", "intermediate", "advanced"];
   const genders = ["boys", "girls", "co-ed"];
 
-  const [results, setResults] = useState(data);
+  const [results, setResults] = useState<IResource[]>([]);
   const [resourceGroup, setResourceGroup] = useState<"plays" | "drills" | "practices">("plays");
   const [resourceType, setResourceType] = useState("");
   const [level, setLevel] = useState("");
@@ -102,9 +103,16 @@ export const LibraryPage: FC = () => {
 
   useEffect(() => {
     if (types[resourceGroup].map(t => t.toLowerCase()).includes(resourceType) && levels.includes(level) && genders.includes(gender)) {
-      setResults(data.filter((result) => (
-        result.group === resourceGroup && result.type === resourceType && result.level === level && result.gender === gender
-      )));
+      try {
+        fetch(`/api/library/${level}/${gender}/${resourceGroup}/${resourceType}`)
+          .then((response) => response.json())
+          .then((results) => {
+            setResults(results);
+          });
+      } catch (error) {
+        console.log(error.message);
+      }
+
       router.push({
         pathname: `/library/${resourceType.split(" ").join("-")}-basketball-${resourceGroup}-for-${level}-${gender}`
       }).then(() => pageRef.current?.scrollTo(0, 0));

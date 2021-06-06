@@ -22,7 +22,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "pages/api/resource/[...config].ts"
   ],
   "exclude": [
     "node_modules"

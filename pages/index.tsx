@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Head from 'next/head';
 import { createUseStyles, useTheme } from "react-jss";
 import { AppTheme } from '../styles/theme';
@@ -6,6 +6,8 @@ import { Page } from '../components/Page';
 import { Toolbar } from '../components/Toolbar';
 import { Button } from '../components/Button';
 import { Footer } from '../components/Footer';
+
+import addCoaches from '../util/addCoaches';
 
 const useStyles = createUseStyles((theme: AppTheme) => ({
   section: {
@@ -89,6 +91,10 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
 export const HomePage: FC = () => {
   const theme = useTheme<AppTheme>();
   const classes = useStyles({ theme });
+
+  useEffect(() => {
+    addCoaches();
+  }, [])
 
   return (
     <>

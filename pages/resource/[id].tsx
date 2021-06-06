@@ -7,6 +7,7 @@ import { Page } from '../../components/Page';
 import { Toolbar } from '../../components/Toolbar';
 import { Footer } from '../../components/Footer';
 import { Button } from '../../components/Button';
+import { IResource } from '../../models/Resource';
 
 const useStyles = createUseStyles((theme: AppTheme) => ({
   resourceContent: {
@@ -79,14 +80,15 @@ export const ResourcePage: FC = (props) => {
   const theme = useTheme<AppTheme>();
   const classes = useStyles({ theme });
 
-  const [resource, setResource] = useState("-1");
+  const [resource, setResource] = useState<IResource>();
 
   useEffect(() => {
     const id = router?.query?.id;
-
-    if (typeof id === "string") {
-      setResource(id);
-    }
+    fetch(`/api/resource/${id}`)
+      .then((response) => response.json())
+      .then((resource) => {
+        setResource(resource);
+      });
   }, [router]);
 
   return (
@@ -111,28 +113,28 @@ export const ResourcePage: FC = (props) => {
           <div className={classes.detailsContainer}>
             <div className={classes.detail}>
               <span>Set Name</span>
-              <h2 className={classes.resourceName}>Play Set #{resource}</h2>
+              <h2 className={classes.resourceName}>{resource?.name}</h2>
             </div>
             <div className={classes.detail}>
               <span>Uploaded By</span>
-              <p>Coach Name</p>
+              <p>{resource?.coach_name}</p>
             </div>
             <div className={classes.detail}>
               <span>Description</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>{resource?.description}</p>
             </div>
             <div className={classes.statsContainer}>
               <div className={classes.detail}>
                 <span>Total Plays</span>
-                <p>75</p>
+                <p>{resource?.size}</p>
               </div>
               <div className={classes.detail}>
                 <span>Rating</span>
-                <p>4.95 / 5</p>
+                <p>{resource?.rating} / 5</p>
               </div>
               <div className={classes.detail}>
                 <span>Downloads</span>
-                <p>316</p>
+                <p>{resource?.downloads}</p>
               </div>
             </div>
             <Button href="/signup" text="Sign Up to Download" type="primary" className={classes.ctaButton} />
