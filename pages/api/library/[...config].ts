@@ -19,7 +19,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
         res.json(resources);
       })
       .catch((error) => {
-        res.json({ message: "error" });
+        res.json({ message: error.message });
       });
   }
 };
