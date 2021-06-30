@@ -94,7 +94,7 @@ export const HomePage: FC = () => {
 
   useEffect(() => {
     addCoaches();
-  }, [])
+  }, []);
 
   return (
     <>
