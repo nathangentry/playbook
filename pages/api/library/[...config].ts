@@ -8,10 +8,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     firebase
       .firestore()
       .collection("library")
-      .where("level", "==", level)
-      .where("gender", "==", gender)
+      .where(`level.${level}`, "==", true)
+      .where(`gender.${gender}`, "==", true)
       .where("group", "==", resourceGroup)
-      .where("type", "==", resourceType)
+      .where(`type.${resourceType}`, "==", true)
       .get()
       .then((data) => {
         const resources: any[] = [];

@@ -55,6 +55,7 @@ export interface ButtonProps {
   onClick?: (ev: MouseEvent<HTMLButtonElement>) => void,
   href?: string,
   className?: string,
+  openNewTab?: boolean,
 }
 
 export const Button: FC<ButtonProps> = (props) => {
@@ -87,7 +88,7 @@ const LinkButton: FC<ButtonProps> = (props) => {
 
   return (
     <Link href={props.href ?? ""}>
-      <a>
+      <a target={props.openNewTab ? "_blank" : "_self"}>
         <button className={`${classes.button} ${props.type} ${props.className}`}>{props.text}</button>
       </a>
     </Link>

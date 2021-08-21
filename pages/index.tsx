@@ -46,6 +46,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     gridColumn: "1 / span 5",
     width: "100%",
     height: "100%",
+    maxHeight: "50vw",
     position: "relative",
     borderRadius: 4,
     overflow: "hidden",
@@ -67,6 +68,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     top: "5%",
     left: "-5%",
     height: "90%",
+    maxHeight: "60vw",
   },
   cta: {
     flexDirection: "column",

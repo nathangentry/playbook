@@ -3,6 +3,7 @@ export interface IResource {
   coach_id?: string,
   description: string,
   downloads: number,
+  file_link?: string,
   gender: string,
   group: string,
   id?: string,

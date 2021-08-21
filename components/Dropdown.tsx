@@ -16,7 +16,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
   },
   select: {
     ...theme.typography.body,
-    border: `2px solid ${theme.colors.ui[1].base}`,
+    border: `2px solid ${theme.colors.ui[1].base.opacity(0)}`,
     borderRightWidth: 12,
     outline: "none",
     boxShadow: `0px 0px 3px ${theme.colors.primary.base.opacity(0)}`,

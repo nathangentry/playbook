@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { createUseStyles, useTheme } from "react-jss";
@@ -8,6 +8,10 @@ import { Toolbar } from '../../components/Toolbar';
 import { Footer } from '../../components/Footer';
 import { Button } from '../../components/Button';
 import { IResource } from '../../models/Resource';
+import firebase from '../../util/firebase';
+import { Document, Page as PdfPage, pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 const useStyles = createUseStyles((theme: AppTheme) => ({
   resourceContent: {
@@ -25,6 +29,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
   lockedState: {
     backgroundColor: `${theme.colors.ui[1].base}`,
     height: "100%",
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -72,6 +77,14 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
   ctaButton: {
     marginTop: 42,
   },
+  pdfDocument: {
+    borderRadius: 4,
+    overflow: "hidden",
+    "& canvas": {
+      width: "100% !important",
+      height: "100% !important",
+    }
+  },
 }));
 
 export const ResourcePage: FC = (props) => {
@@ -81,6 +94,7 @@ export const ResourcePage: FC = (props) => {
   const classes = useStyles({ theme });
 
   const [resource, setResource] = useState<IResource>();
+  const [pdfLink, setPdfLink] = useState<string>();
 
   useEffect(() => {
     const id = router?.query?.id;
@@ -91,10 +105,22 @@ export const ResourcePage: FC = (props) => {
       });
   }, [router]);
 
+  useEffect(() => {
+    if (resource?.file_link) {
+      firebase.storage().refFromURL(resource.file_link).getDownloadURL()
+        .then((url) => {
+          setPdfLink(url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [resource]);
+
   return (
     <>
       <Head>
-        <title>{resource} | Playbook – Coach Better</title>
+        <title>{resource?.name} – Basketball coaching resource from {resource?.coach_name} on Playbook</title>
         <meta name="description" content="Unlock your coaching potential with Playbook, a platform connecting experienced coaches with materials and those just starting out who are in need of help." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -105,10 +131,17 @@ export const ResourcePage: FC = (props) => {
         <Toolbar />
         <div className={classes.resourceContent}>
           <div className={classes.previewContainer}>
-            <div className={classes.lockedState}>
-              <span className={`material-icons ${classes.lockedIcon}`}>lock</span>
-              <p className={classes.lockedMessage}>Sign Up to Download</p>
-            </div>
+            {pdfLink
+              ?
+              <Document file={{ url: pdfLink }} className={classes.pdfDocument}>
+                <PdfPage pageNumber={1} />
+              </Document>
+              :
+              <div className={classes.lockedState}>
+                <span className={`material-icons ${classes.lockedIcon} `}>lock</span>
+                <p className={classes.lockedMessage}>Sign Up to Download</p>
+              </div>
+            }
           </div>
           <div className={classes.detailsContainer}>
             <div className={classes.detail}>
@@ -137,7 +170,12 @@ export const ResourcePage: FC = (props) => {
                 <p>{resource?.downloads}</p>
               </div>
             </div>
-            <Button href="/signup" text="Sign Up to Download" type="primary" className={classes.ctaButton} />
+            {pdfLink
+              ?
+              <Button href={pdfLink} openNewTab text="Download" type="primary" className={classes.ctaButton} />
+              :
+              <Button href="/signup" text="Sign Up to Download" type="primary" className={classes.ctaButton} />
+            }
           </div>
         </div>
         <Footer />
