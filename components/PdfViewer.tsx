@@ -114,7 +114,7 @@ export const PdfViewer: FC<PdfViewerProps> = ({ file }) => {
         </button>
       }
       <div className={classes.paginationContainer}>
-        {[...Array(numPages).keys()].map((_, i) => (
+        {Array.from(Array(numPages).keys()).map((_, i) => (
           <button
             className={`${classes.paginationDot}${(i + 1) === pageNumber ? " active" : ""}`}
             onClick={() => setPageNumber(i + 1)}
