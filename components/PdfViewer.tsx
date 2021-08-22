@@ -12,6 +12,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     height: "100%",
   },
   pdfDocument: {
+    backgroundColor: "#ffffff",
     borderRadius: 4,
     overflow: "hidden",
     "& canvas": {
@@ -19,7 +20,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
       height: "100% !important",
     }
   },
-  loadingPlaceholder: {
+  previewUpdateView: {
     height: "calc((5 * ((100vw - (2 * 120px)) / 12)) * 11 / 8.5)",
     display: "flex",
     flexDirection: "column",
@@ -31,6 +32,8 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     color: `${theme.colors.ui[1].text.primary}`,
   },
   navArrow: {
+    border: "none",
+    backgroundColor: theme.colors.ui[0].base.toString(),
     position: "absolute",
     top: `calc(50% - 16px)`,
     "& > .material-icons": {
@@ -58,6 +61,7 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
     height: 12,
     width: 12,
     borderRadius: 6,
+    border: "none",
     backgroundColor: theme.colors.ui[0].text.primary.opacity(0.5),
     cursor: "pointer",
     "&.active": {
@@ -83,34 +87,39 @@ export const PdfViewer: FC<PdfViewerProps> = ({ file }) => {
   return (
     <div className={classes.pdfViewer}>
       {pageNumber > 1 &&
-        <div
+        <button
           className={`${classes.navArrow} ${classes.arrowBack}`}
           onClick={() => setPageNumber(pageNumber - 1)}
+          title="Previous Page"
         >
           <span className="material-icons">chevron_left</span>
-        </div>
+        </button>
       }
       <Document
-        file={{ url: file }}
+        file={file}
         className={classes.pdfDocument}
-        loading={<div className={classes.loadingPlaceholder}>Loading Resource...</div>}
+        loading={<div className={classes.previewUpdateView}>Loading resource...</div>}
+        error={<div className={classes.previewUpdateView}>Failed to load PDF preview</div>}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page pageNumber={pageNumber} />
       </Document>
       {numPages - pageNumber > 1 &&
-        <div
+        <button
           className={`${classes.navArrow} ${classes.arrowForward}`}
           onClick={() => setPageNumber(pageNumber + 1)}
+          title="Next Page"
         >
           <span className="material-icons">chevron_right</span>
-        </div>
+        </button>
       }
       <div className={classes.paginationContainer}>
         {[...Array(numPages).keys()].map((_, i) => (
-          <div
+          <button
             className={`${classes.paginationDot}${(i + 1) === pageNumber ? " active" : ""}`}
             onClick={() => setPageNumber(i + 1)}
+            key={`pagination_${i}`}
+            title={`Page ${i + 1} of ${numPages}`}
           />
         ))}
       </div>

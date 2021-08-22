@@ -84,6 +84,7 @@ export const ResourcePage: FC = (props) => {
 
   const [resource, setResource] = useState<IResource>();
   const [pdfLink, setPdfLink] = useState<string>();
+  const [pdf, setPdf] = useState<string>();
 
   useEffect(() => {
     const id = router?.query?.id;
@@ -99,6 +100,15 @@ export const ResourcePage: FC = (props) => {
       firebase.storage().refFromURL(resource.file_link).getDownloadURL()
         .then((url) => {
           setPdfLink(url);
+
+          var xhr = new XMLHttpRequest();
+          xhr.responseType = 'blob';
+          xhr.onload = (event) => {
+            var blob = xhr.response;
+            setPdf(blob);
+          };
+          xhr.open('GET', url);
+          xhr.send();
         })
         .catch((error) => {
           console.log(error);
@@ -120,9 +130,9 @@ export const ResourcePage: FC = (props) => {
         <Toolbar />
         <div className={classes.resourceContent}>
           <div className={classes.previewContainer}>
-            {pdfLink
+            {pdf
               ?
-              <PdfViewer file={pdfLink} />
+              <PdfViewer file={pdf} />
               :
               <div className={classes.lockedState}>
                 <span className={`material-icons ${classes.lockedIcon} `}>lock</span>
