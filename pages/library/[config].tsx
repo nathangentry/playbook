@@ -107,7 +107,7 @@ export const LibraryPage: FC = () => {
         fetch(`/api/library/${level}/${gender}/${resourceGroup}/${resourceType}`)
           .then((response) => response.json())
           .then((results) => {
-            setResults(results);
+            setResults(results.sort((a: IResource, b: IResource) => b.rating - a.rating));
           });
       } catch (error) {
         console.log(error.message);

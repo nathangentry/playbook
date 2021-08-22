@@ -7,11 +7,9 @@ import { Page } from '../../components/Page';
 import { Toolbar } from '../../components/Toolbar';
 import { Footer } from '../../components/Footer';
 import { Button } from '../../components/Button';
+import { PdfViewer } from '../../components/PdfViewer';
 import { IResource } from '../../models/Resource';
 import firebase from '../../util/firebase';
-import { Document, Page as PdfPage, pdfjs } from 'react-pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 const useStyles = createUseStyles((theme: AppTheme) => ({
   resourceContent: {
@@ -22,12 +20,11 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
   },
   previewContainer: {
     gridColumn: "1 / span 5",
-    borderRadius: 4,
-    overflow: "hidden",
     height: "calc((5 * ((100vw - (2 * 120px)) / 12)) * 11 / 8.5)",
   },
   lockedState: {
     backgroundColor: `${theme.colors.ui[1].base}`,
+    borderRadius: 4,
     height: "100%",
     width: "100%",
     display: "flex",
@@ -77,14 +74,6 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
   ctaButton: {
     marginTop: 42,
   },
-  pdfDocument: {
-    borderRadius: 4,
-    overflow: "hidden",
-    "& canvas": {
-      width: "100% !important",
-      height: "100% !important",
-    }
-  },
 }));
 
 export const ResourcePage: FC = (props) => {
@@ -133,9 +122,7 @@ export const ResourcePage: FC = (props) => {
           <div className={classes.previewContainer}>
             {pdfLink
               ?
-              <Document file={{ url: pdfLink }} className={classes.pdfDocument}>
-                <PdfPage pageNumber={1} />
-              </Document>
+              <PdfViewer file={pdfLink} />
               :
               <div className={classes.lockedState}>
                 <span className={`material-icons ${classes.lockedIcon} `}>lock</span>
@@ -163,7 +150,7 @@ export const ResourcePage: FC = (props) => {
               </div>
               <div className={classes.detail}>
                 <span>Rating</span>
-                <p>{resource?.rating} / 5</p>
+                <p>{(Math.round((resource?.rating ?? 0) * 100) / 100).toFixed(2)} / 5</p>
               </div>
               <div className={classes.detail}>
                 <span>Downloads</span>

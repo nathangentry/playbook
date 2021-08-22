@@ -52,7 +52,7 @@ export const ResourcePreview: FC<ResourcePreviewProps> = (props) => {
           <p className={classes.previewDetail}>{props.resource.coach_name}</p>
         </div>
         <div className={classes.resourceStats}>
-          <p className={classes.previewDetail}>{props.resource.rating} / 5 <span className="material-icons">star</span></p>
+          <p className={classes.previewDetail}>{(Math.round(props.resource.rating * 100) / 100).toFixed(2)} / 5 <span className="material-icons">star</span></p>
           <p className={classes.previewDetail}>{props.resource.downloads} downloads <span className="material-icons">download</span></p>
         </div>
       </a>

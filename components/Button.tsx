@@ -47,6 +47,9 @@ const useStyles = createUseStyles((theme: AppTheme) => ({
       }
     },
   },
+  aWrapper: {
+    width: "fit-content",
+  }
 }));
 
 export interface ButtonProps {
@@ -88,8 +91,8 @@ const LinkButton: FC<ButtonProps> = (props) => {
 
   return (
     <Link href={props.href ?? ""}>
-      <a target={props.openNewTab ? "_blank" : "_self"}>
-        <button className={`${classes.button} ${props.type} ${props.className}`}>{props.text}</button>
+      <a className={`${classes.aWrapper} ${props.className}`} target={props.openNewTab ? "_blank" : "_self"}>
+        <button className={`${classes.button} ${props.type}`}>{props.text}</button>
       </a>
     </Link>
   );
